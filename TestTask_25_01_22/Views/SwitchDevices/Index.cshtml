@@ -1,0 +1,196 @@
+﻿@model PaginatedList<TestTask_25_01_22.Models.SwitchDevice>
+
+@{
+    ViewData["Title"] = "Список коммутаторов";
+}
+
+<h1>Коммутаторы</h1>
+
+<p>
+    <a asp-action="Create">Добавить новый</a>
+</p>
+
+@{
+    var searchDevices = ViewData["CurrentFilter"] as SwitchDevice;
+}
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Поиск по инвентарному номеру: <input type="text" name="searchInventory" value="@searchDevices.InventoryNumber" />
+            <input type="submit" value="Поиск" class="btn btn-outline-primary" tabindex="0" />
+            <a asp-action="Index">Сброс фильтра</a>
+        </p>
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Расширенный поиск
+            </a>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="col col-lg-5">
+                                <input type="text" class="form-control" name="searchModel" value="@searchDevices.ModelName" placeholder="Название модели" />
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col col-lg-5">
+                                <input type="text" class="form-control" name="searchIP" value="@searchDevices.Ipv4" placeholder="IP-адрес" />
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col col-lg-5">
+                                <input type="text" class="form-control" name="searchMAC" value="@searchDevices.Mac" placeholder="MAC-адрес" />
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col col-lg-5">
+                                <input type="text" class="form-control" name="searchVLAN" value="@searchDevices.MainVlan" placeholder="Управляющий VLAN" />
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col col-lg-5">
+                                <input type="text" class="form-control" name="searchSerial" value="@searchDevices.SerialNumber" placeholder="Серийный номер" />
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col col-lg-5">
+                                <input type="text" class="form-control" name="searchPurchase" onfocus="(this.type='date')" placeholder="Дата покупки" />
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col col-lg-5">
+                                <input type="text" class="form-control" name="searchInstallation" onfocus="(this.type='date')" placeholder="Дата установки" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Название модели
+                </th>
+                <th>
+                    IP-адрес
+                </th>
+                <th>
+                    Mac-адрес
+                </th>
+                <th>
+                    Управляющий VLAN
+                </th>
+                <th>
+                    Серийный номер
+                </th>
+                <th>
+                    Инвентарный номер
+                </th>
+                <th>
+                    Дата покупки
+                </th>
+                <th>
+                    Дата установки
+                </th>
+                <th>
+                    Доступные действия
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ipv4)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mac)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MainVlan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SerialNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InventoryNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InstallationDate)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.SerialNumber">Редактировать</a>
+                        <a asp-action="Details" asp-route-id="@item.SerialNumber">Полная информация</a>
+                        <a asp-action="Delete" asp-route-id="@item.SerialNumber">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    @{
+
+        var parms = new Dictionary<string, string>
+    {
+            { "pageNumber", (Model.PageIndex - 1).ToString() },
+            { "pageSize", ViewData["CurrentPageSize"].ToString() },
+            { "InventoryNumber", !string.IsNullOrEmpty(searchDevices.InventoryNumber) ? searchDevices.InventoryNumber : "" },
+            { "ModelName", !string.IsNullOrEmpty(searchDevices.ModelName) ? searchDevices.ModelName : "" },
+            { "Ipv4", !string.IsNullOrEmpty(searchDevices.Ipv4) ? searchDevices.Ipv4 : "" },
+            { "Mac", !string.IsNullOrEmpty(searchDevices.Mac) ? searchDevices.Mac : "" },
+            { "MainVlan", !string.IsNullOrEmpty(searchDevices.MainVlan) ? searchDevices.MainVlan : "" },
+            { "SerialNumber", !string.IsNullOrEmpty(searchDevices.SerialNumber) ? searchDevices.SerialNumber : "" },
+            { "PurchaseDate", searchDevices.PurchaseDate != DateTime.Parse("01.01.0001") ? searchDevices.PurchaseDate.ToString() : "" },
+            { "InstallationDate", searchDevices.InstallationDate != DateTime.Parse("01.01.0001") ? searchDevices.InstallationDate.ToString() : "" }
+        };
+    }
+
+    <a asp-action="Index"
+       asp-all-route-data="parms"
+       class="btn btn-default @prevDisabled">
+        Предыдущая
+    </a>
+
+    @{
+        parms["pageNumber"] = (Model.PageIndex + 1).ToString();
+    }
+
+    <a asp-action="Index"
+       asp-all-route-data="parms"
+       class="btn btn-default @nextDisabled">
+        Следующая
+    </a>
+
+    <br />
+
+    <div class="form-actions no-color">
+        <div class="form-group">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-auto">
+                        Количество элементов на странице:
+                    </div>
+                    <div class="col col-lg-2">
+                        <select class="form-control" asp-items="ViewBag.PageSizes" name="pageSize">
+                            <option selected="selected" hidden>@ViewData["CurrentPageSize"]</option>
+                        </select>
+                    </div>
+                    <div class="col col-lg-2">
+                        <input type="submit" value="Применить" class="btn btn-outline-primary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
