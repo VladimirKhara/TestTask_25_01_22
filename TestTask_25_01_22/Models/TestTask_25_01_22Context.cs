@@ -121,17 +121,6 @@ namespace TestTask_25_01_22.Models
             return DateTime.Today.AddDays(-random.Next(0, 3650));
         }
 
-        //public string Mac { get; set; }
-        //public string MainVlan { get; set; }
-        //public string SerialNumber { get; set; }
-        //public string InventoryNumber { get; set; }
-        //public DateTime PurchaseDate { get; set; }
-        //public DateTime? InstallationDate { get; set; }
-
-        //public byte? Stage { get; set; }
-        //public string Comment { get; set; }
-
-
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
     }

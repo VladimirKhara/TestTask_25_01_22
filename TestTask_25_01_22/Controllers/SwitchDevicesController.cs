@@ -209,36 +209,5 @@ namespace TestTask_25_01_22.Controllers
             return _context.SwitchDevices.Any(e => e.SerialNumber == id);
         }
 
-        public IActionResult IsNotExistsIP(string ipv4)
-        {
-            IEnumerable<SwitchDevice> switchDevice = _context.SwitchDevices.Where(sd => sd.Ipv4 == ipv4);
-            if (switchDevice.Count() == 0 && _context.SwitchDevices.Any(sd => sd.Ipv4 == ipv4))
-                return Json(false);
-            return Json(true);
-        }
-
-        public IActionResult IsNotExistsMAC(string mac)
-        {
-            IEnumerable<SwitchDevice> switchDevice = _context.SwitchDevices.Where(sd => sd.Mac == mac);
-            if (switchDevice.Count() == 0 && _context.SwitchDevices.Any(sd => sd.Mac == mac))
-                return Json(false);
-            return Json(true);
-        }
-
-        public IActionResult IsNotExistsVLAN(string vlan)
-        {
-            IEnumerable<SwitchDevice> switchDevice = _context.SwitchDevices.Where(sd => sd.MainVlan == vlan);
-            if (switchDevice.Count() == 0 && _context.SwitchDevices.Any(sd => sd.MainVlan == vlan))
-                return Json(false);
-            return Json(true);
-        }
-
-        public IActionResult IsNotExistsInventoryNumber(string inventory)
-        {
-            IEnumerable<SwitchDevice> switchDevice = _context.SwitchDevices.Where(sd => sd.InventoryNumber == inventory);
-            if (switchDevice.Count() == 0 && _context.SwitchDevices.Any(sd => sd.InventoryNumber == inventory))
-                return Json(false);
-            return Json(true);
-        }
     }
 }

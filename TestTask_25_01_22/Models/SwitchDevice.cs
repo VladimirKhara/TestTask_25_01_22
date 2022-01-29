@@ -32,19 +32,16 @@ namespace TestTask_25_01_22.Models
         [Display(Name = "IP-адрес")]
         [Required(ErrorMessage = "Введите IP-адрес")]
         [RegularExpression(@"(\d{1,3}).(\d{1,3}).(\d{1,3}).(\d{1,3})", ErrorMessage = "Некорректный IP-адрес")]
-        //[Remote(action: "IsNotExistsIP", controller: "SwitchDevices", ErrorMessage = "IP-адрес уже используется")]
         public string Ipv4 { get; set; }
 
         [Display(Name = "MAC-адрес")]
         [Required(ErrorMessage = "Введите MAC-адрес")]
         [RegularExpression(@"^[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}$", ErrorMessage = "Некорректный MAC-адрес")]
-        //[Remote(action: "IsNotExistsMAC", controller: "SwitchDevices", ErrorMessage = "MAC-адрес занят")]
         public string Mac { get; set; }
 
         [Display(Name = "VLAN")]
         [Required(ErrorMessage = "Введите VLAN")]
         [RegularExpression(@"(\d{1,3}).(\d{1,3}).(\d{1,3}).(\d{1,3})", ErrorMessage = "Некорректный адрес VLAN")]
-        //[Remote(action: "IsNotExistsVLAN", controller: "SwitchDevices", ErrorMessage = "VLAN-адрес уже используется")]
         public string MainVlan { get; set; }
 
         [Display(Name = "Cерийный номер")]
@@ -53,7 +50,6 @@ namespace TestTask_25_01_22.Models
 
         [Display(Name = "Инвентарный номер")]
         [Required(ErrorMessage = "Введите инвентарный номер")]
-        //[Remote(action: "IsNotExistsInventoryNumber", controller: "SwitchDevices", ErrorMessage = "Инвентарный номер занят")]
         public string InventoryNumber { get; set; }
 
         [Display(Name = "Дата закупки")]
